@@ -1,5 +1,8 @@
 package tools;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +17,26 @@ public class FileTools {
             return walk.filter(Files::isRegularFile).collect(Collectors.toList());
         } catch (IOException e) {
             throw e;
+        }
+    }
+
+    public static String getFileName(String fileName) {
+        return fileName.substring(0, fileName.indexOf("."));
+    }
+
+    public static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.indexOf(".") + 1);
+    }
+
+    public static void writeInFile(String fileName, String value) {
+        fileName = "logs/" + fileName;
+        File file = new File(fileName);
+        file.getParentFile().mkdirs();
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(value);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
